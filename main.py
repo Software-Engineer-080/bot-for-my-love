@@ -4,6 +4,8 @@ import random
 from telebot import types
 from glob import glob
 
+my_id, her_id = "", ""
+
 music = glob('audio/*')
 
 href = 'https://t.me/'
@@ -157,15 +159,16 @@ bot = telebot.TeleBot('')
 
 @bot.message_handler(commands=["start"])
 def start(m):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton("Узнать что-то новое 🤔")
-    item2 = types.KeyboardButton("Получить музончик 🎻")
-    item3 = types.KeyboardButton("Словить комплимент 🥰")
-    item4 = types.KeyboardButton("Связаться с создателем 💻")
-    markup.add(item1, item3)
-    markup.add(item2, item4)
-    bot.send_message(m.chat.id, 'Здравствуй Сладенькая! 😍 \n\nЕсли ты нажала /start, то это значит, что я отправил тебе ссылку на этого бота в твой День рождения! 🎁 '
-                                '\n\nВыбери соответствующую кнопку меню:', reply_markup=markup)
+    if m.chat.id == my_id or her_id:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        item1 = types.KeyboardButton("Узнать что-то новое 🤔")
+        item2 = types.KeyboardButton("Получить музончик 🎻")
+        item3 = types.KeyboardButton("Словить комплимент 🥰")
+        item4 = types.KeyboardButton("Связаться с создателем 💻")
+        markup.add(item1, item3)
+        markup.add(item2, item4)
+        bot.send_message(m.chat.id, 'Здравствуй Сладенькая! 😍 \n\nЕсли ты нажала /start, то это значит, что я отправил тебе ссылку на этого бота в твой День рождения! 🎁 '
+                                    '\n\nВыбери соответствующую кнопку меню:', reply_markup=markup)
 
 
 @bot.message_handler(content_types=["text"])
